@@ -1,0 +1,12 @@
+{
+  "name": "drawingbox-server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node api/generate-image.js"
+  },
+  "dependencies": {
+    "node-fetch": "^3.3.2"
+  },
+  "type": "module"
+}
