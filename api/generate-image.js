@@ -4,7 +4,7 @@ export default async function handler(req, res) {
     const allowed = ["1024x1024", "1024x1792", "1792x1024"];
     const finalSize = allowed.includes(size) ? size : "1024x1024";
 
-    const r = await fetch("https://api.openai.com/v1/images/generations", {
+    const response = await fetch("https://api.openai.com/v1/images/generations", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -13,14 +13,14 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         model: "gpt-image-1",
         prompt,
-        size: finalSize,
+        size: finalSize
       }),
     });
 
-    const data = await r.json();
+    const data = await response.json();
     res.status(200).json(data);
   } catch (error) {
-    console.error("Error:", error);
-    res.status(500).json({ error: "Image generation failed." });
+    console.error(error);
+    res.status(500).json({ error: "Image generation failed" });
   }
 }
