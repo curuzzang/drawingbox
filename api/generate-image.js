@@ -8,21 +8,19 @@ export default async function handler(req, res) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`
+        Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
       },
       body: JSON.stringify({
         model: "gpt-image-1",
         prompt,
         size: finalSize,
-        n: 1
-      })
+      }),
     });
 
     const data = await r.json();
-    const url = data?.data?.[0]?.url;
-    return res.status(200).json({ url });
-  } catch (e) {
-    console.error("Error generating image:", e);
-    return res.status(500).json({ error: e.message });
+    res.status(200).json(data);
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ error: "Image generation failed." });
   }
 }
